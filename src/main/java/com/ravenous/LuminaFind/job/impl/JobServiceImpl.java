@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class JobServiceImpl implements JobService {
     private List<Job> jobs = new ArrayList<>();
-    private Long nextId = 1L;
 
     @Override
     public List<Job> findAll() {
@@ -19,7 +18,6 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public void createJob(Job job) {
-        job.setId(nextId++);
         jobs.add(job);
     }
 
@@ -31,5 +29,27 @@ public class JobServiceImpl implements JobService {
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean deleteJobById(Long id) {
+        for (int i = 0; i < jobs.size(); i++) {
+            if (id.equals(jobs.get(i).getId())) {
+                jobs.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateJobById(Long id, Job job) {
+        for (int i = 0; i < jobs.size(); i++) {
+            if (id.equals(jobs.get(i).getId())) {
+                jobs.set(i, job);
+                return true;
+            }
+        }
+        return false;
     }
 }
