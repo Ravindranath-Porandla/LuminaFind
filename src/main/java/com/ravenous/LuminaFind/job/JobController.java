@@ -1,6 +1,7 @@
 package com.ravenous.LuminaFind.job;
 
 import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +13,9 @@ import java.util.List;
 @RequestMapping("/jobs")
 public class JobController {
 
-    private JobService jobService;
+    private final JobService jobService;
 
+    @Autowired
     public JobController(JobService jobService) {
         this.jobService = jobService;
     }
@@ -46,7 +48,7 @@ public class JobController {
         if (delete) {
             return new ResponseEntity<>("Job is Deleted", HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Job is not found", HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/{id}")
