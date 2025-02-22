@@ -1,32 +1,28 @@
-package com.ravenous.LuminaFind.company;
+package com.ravenous.LuminaFind.review;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ravenous.LuminaFind.job.Job;
-import com.ravenous.LuminaFind.review.Review;
+import com.ravenous.LuminaFind.company.Company;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity
-public class Company {
+public class Review {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String title;
     private String description;
+    private double rating;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "company")
-    private List<Job> jobs;
-
-    @OneToMany(mappedBy = "company")
-    private List<Review> reviews;
+    @ManyToOne
+    private Company company;
 }
